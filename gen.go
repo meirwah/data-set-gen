@@ -8,11 +8,12 @@ import (
     "math/rand"
 	"log"
 	"io/ioutil"
+	"strconv"
 )
 
 const (
 	BODY_SIZE       = 5000
-	FILE_PREFIX     = "dat"
+	FILE_PREFIX     = "tmp/data"
 	DATA_SET_SIZE   = 1000
 )
 
@@ -27,16 +28,18 @@ func main() {
 
 	fmt.Println("Starting set-sets creation")
 
-	m := Message{1,"Alice", RandStringRunes(BODY_SIZE), rand.Int63()}
-	data, err := json.Marshal(m)
 
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = ioutil.WriteFile(FILE_PREFIX, data, 0644)
+	for i := 0; i < DATA_SET_SIZE; i++ {
+		m := Message{1,"Alice", RandStringRunes(BODY_SIZE), rand.Int63()}
+		data, err := json.Marshal(m)
 
-	if err != nil {
-		log.Fatal(err)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = ioutil.WriteFile(FILE_PREFIX+strconv.Itoa(i), data, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 }
