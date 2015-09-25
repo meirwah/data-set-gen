@@ -13,17 +13,34 @@ import (
 )
 
 const (
-	BODY_SIZE       = 5000
+	BODY_SIZE       = 250
 	RESULT_FOLDER   = "tmp"
 	FILE_PREFIX     = "data"
-	DATA_SET_SIZE   = 1000000
+	DATA_SET_SIZE   = 10
 	DICT            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 )
 
 type Message struct {
-	Id   int64
+	Id   int
 	Name string
-	Body string
+	Body1 string
+	Body2 string
+	Body3 string
+	Body4 string
+	Body5 string
+	Body6 string
+	Body7 string
+	Body8 string
+	Body9 string
+	Body10 string
+	Body11 string
+	Body12 string
+	Body13 string
+	Body14 string
+	Body15 string
+	Body16 string
+	Body17 string
+
 	Time int64
 }
 
@@ -31,7 +48,7 @@ func main() {
 
 	fmt.Println("Starting set-sets creation")
 	if _, err := os.Stat(RESULT_FOLDER); os.IsNotExist(err) {
-		err := os.Mkdir(RESULT_FOLDER,0644)
+		err := os.Mkdir(RESULT_FOLDER,0777)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -40,7 +57,14 @@ func main() {
 
 
 	for i := 0; i < DATA_SET_SIZE; i++ {
-		m := Message{1,"Alice", RandStringRunes(BODY_SIZE), rand.Int63()}
+		m := Message{i,"Alice", RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+			rand.Int63(),
+		    }
 		data, err := json.Marshal(m)
 
 		if err != nil {
