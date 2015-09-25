@@ -3,7 +3,7 @@ package main
 
 import (
 	"encoding/json"
-	//"flag"
+	"flag"
 	"fmt"
     "math/rand"
 	"log"
@@ -18,6 +18,13 @@ const (
 	FILE_PREFIX     = "data"
 	DATA_SET_SIZE   = 10
 	DICT            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+)
+
+var (
+	bodyFieldSize = flag.Int("fieldsize", BODY_SIZE, "size of each String field")
+	folder = flag.String("folder", RESULT_FOLDER, "Folder to place result data set")
+	dataSetSize     = flag.Int("setsize", DATA_SET_SIZE, "amount of files to be created")
+	filePrefix       = flag.String("fileprefix", "", "the each file prefix , suffix will be int ID")
 )
 
 type Message struct {
@@ -45,10 +52,11 @@ type Message struct {
 }
 
 func main() {
+    flag.Parse()
 
 	fmt.Println("Starting set-sets creation")
-	if _, err := os.Stat(RESULT_FOLDER); os.IsNotExist(err) {
-		err := os.Mkdir(RESULT_FOLDER,0777)
+	if _, err := os.Stat(*folder); os.IsNotExist(err) {
+		err := os.Mkdir(*folder,0777)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -56,13 +64,13 @@ func main() {
 
 
 
-	for i := 0; i < DATA_SET_SIZE; i++ {
-		m := Message{i,"Alice", randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
-			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
-			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
-			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
-			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
-			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+	for i := 0; i < *dataSetSize; i++ {
+		m := Message{i,"Alice", randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
+			randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
+			randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
+			randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
+			randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
+			randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize), randStringRunes(*bodyFieldSize),
 			rand.Int63(),
 		    }
 		data, err := json.Marshal(m)
@@ -70,12 +78,12 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = ioutil.WriteFile(RESULT_FOLDER + "/" + FILE_PREFIX+strconv.Itoa(i), data, 0644)
+		err = ioutil.WriteFile(*folder + "/" + *filePrefix+strconv.Itoa(i), data, 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	fmt.Println("Created "+ strconv.Itoa(DATA_SET_SIZE) + " files")
+	fmt.Println("Created "+ strconv.Itoa(*dataSetSize) + " files")
 }
 
 
