@@ -57,12 +57,12 @@ func main() {
 
 
 	for i := 0; i < DATA_SET_SIZE; i++ {
-		m := Message{i,"Alice", RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
-			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
-			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
-			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
-			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
-			RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE), RandStringRunes(BODY_SIZE),
+		m := Message{i,"Alice", randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
+			randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE), randStringRunes(BODY_SIZE),
 			rand.Int63(),
 		    }
 		data, err := json.Marshal(m)
@@ -75,13 +75,13 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-
+	fmt.Println("Created "+ strconv.Itoa(DATA_SET_SIZE) + " files")
 }
 
 
 var letterRunes = []rune(DICT)
 
-func RandStringRunes(n int) string {
+func randStringRunes(n int) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
